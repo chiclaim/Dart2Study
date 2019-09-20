@@ -1,24 +1,28 @@
-import 'dart:io';
+main() async {
+  Future deleteLotsOfFiles() async {
+    print("deleteLotsOfFiles");
+    return Future.delayed(Duration(seconds: 5), () {
+      return "deleteLotsOfFiles";
+    });
+  }
 
-main() {
-  Future.wait([async01(), async02(), async03()]);
-  print("end");
-}
+  Future copyLotsOfFiles() async {
+    print("copyLotsOfFiles");
+    return ("copyLotsOfFiles");
+  }
 
-Future<int> async01() async {
-  print("async01");
-  sleep(Duration(seconds: 1));
-  return 1;
-}
+  Future checksumLotsOfOtherFiles() async {
+    print("checksumLotsOfOtherFiles");
+    return ("checksumLotsOfOtherFiles");
+  }
 
-Future<int> async02() async {
-  print("async02");
-  sleep(Duration(seconds: 1));
-  return 2;
-}
+  // 虽然是并发执行，但是结果的顺序会是 wait 参数集合的顺序
+  var result = await Future.wait([
+    deleteLotsOfFiles(),
+    copyLotsOfFiles(),
+    checksumLotsOfOtherFiles(),
+  ]);
 
-Future<int> async03() async {
-  print("async03");
-  sleep(Duration(seconds: 1));
-  return 3;
+  print(result);
+  print('Done with all the long steps!');
 }
